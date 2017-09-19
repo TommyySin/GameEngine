@@ -1,0 +1,6 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(372,5): warning MSB8004: Intermediate Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Intermediate Directory.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(373,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+  Source.cpp
+c:\users\tommy\documents\github\gameengine\source\source.cpp(44): warning C4551: function call missing argument list
+  GameEngine.vcxproj -> C:\Users\Tommy\Documents\GitHub\GameEngine\Source\GameEngine\..\..\Game\GameEngine.exe
+  GameEngine.vcxproj -> ..\..\Game\GameEngine.pdb (Partial PDB)
