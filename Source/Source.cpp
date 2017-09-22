@@ -5,6 +5,7 @@
 #include <ctype.h>
 #include <iostream> 
 #include <tchar.h>
+#include <intrin.h>
 
 
 using namespace std;
@@ -67,7 +68,7 @@ DWORD ReadCPUSpeed() {
 	return dwMHz;
 }
 
-bool CheckMemory() {
+void CheckMemory() {
 	MEMORYSTATUSEX statex;
 	statex.dwLength = sizeof(statex);
 	GlobalMemoryStatusEx(&statex);
@@ -77,26 +78,31 @@ bool CheckMemory() {
 
 	cout << "There are " << statex.ullTotalVirtual/(1024*1024) << " total MB of virtual memory" << "\n";
 	cout << "There are " << statex.ullAvailVirtual / (1024*1024) << " free MB of virtual memory" << "\n";
+}
 
-	/*if (status.ullTotalPhys) 
+
+void GetProcessorName()
+{
+	int CPUInfo[4] = { -1 };
+	char CPUBrandString[0x40];
+	__cpuid(CPUInfo, 0x80000000);
+	unsigned int nExIds = CPUInfo[0];
+	
+	memset(CPUBrandString, 0, sizeof(CPUBrandString));
+
+	// Get the information associated with each extended ID.
+	for (int i = 0x80000000; i <= nExIds; ++i)
 	{
-		 you don’t have enough physical memory. Tell the
-		player to go get a real computer and give this one to
-		his mother. 
-		GCC_ERROR(“CheckMemory Failure : Not enough physical
-			memory.”); 
-		return false;
-	}*/
-	// Check for enough free memory.
-	/*if (status.ullAvailVirtual) {
-		// you don’t have enough virtual memory available.
-		// Tell the player to shut down the copy of Visual
-		//Studio running in the background.
-			GCC_ERROR(“CheckMemory Failure : Not enough virtual
-				memory.”);
-		return false;
-	}*/
-	return true;
+		__cpuid(CPUInfo, i);
+		// Interpret CPU brand string.
+		if (i == 0x80000002)
+			memcpy(CPUBrandString, CPUInfo, sizeof(CPUInfo));
+		else if (i == 0x80000003)
+			memcpy(CPUBrandString + 16, CPUInfo, sizeof(CPUInfo));
+		else if (i == 0x80000004)
+			memcpy(CPUBrandString + 32, CPUInfo, sizeof(CPUInfo));
+	}
+	cout << "The CPU in this computer is: " << CPUBrandString << "\n";
 }
 
 int main()
@@ -104,7 +110,8 @@ int main()
 	IsOnlyInstance();
 	CheckStorage(3e+8);
 	CheckMemory();
-	cout << "Your CPU Speed is "<<ReadCPUSpeed()<< "\n";
+	cout << "Your CPU Speed is "<<ReadCPUSpeed()<< "MHz" <<  "\n";
+	GetProcessorName();
 	system("pause");
 	return 0;
 }
