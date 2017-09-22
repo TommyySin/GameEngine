@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <iostream> 
+#include <tchar.h>
 
 
 using namespace std;
@@ -27,7 +28,7 @@ bool IsOnlyInstance() {
 		cout << "It has been running" << "\n";
 		return false;
 	}
-	cout << "This is the only one." << "\n";
+	cout << "This is the only window opening." << "\n";
 	return true;
 }
 
@@ -44,7 +45,7 @@ bool CheckStorage(const DWORDLONG diskSpaceNeeded) {
 		cout << "CheckStorge Failure : Not enough physical storage." << "\n";
 		return false;
 	}
-	cout << "Enough" << "\n";
+	cout << "You have enough physical storage." << "\n";
 	return true;
 }
 
@@ -67,11 +68,15 @@ DWORD ReadCPUSpeed() {
 }
 
 bool CheckMemory() {
-	MEMORYSTATUSEX status;
-	GlobalMemoryStatusEx(&status);
+	MEMORYSTATUSEX statex;
+	statex.dwLength = sizeof(statex);
+	GlobalMemoryStatusEx(&statex);
 	
-	cout << status.ullTotalPhys << "\n" ;
-	cout << status.ullAvailVirtual << "\n";
+	cout << "There are " << statex.ullTotalPhys/(1024*1024) << " total MB of physical memory" << "\n" ;
+	cout << "There are " << statex.ullAvailPhys / (1024 * 1024) << " free MB of physical memory" << "\n";
+
+	cout << "There are " << statex.ullTotalVirtual/(1024*1024) << " total MB of virtual memory" << "\n";
+	cout << "There are " << statex.ullAvailVirtual / (1024*1024) << " free MB of virtual memory" << "\n";
 
 	/*if (status.ullTotalPhys) 
 	{
@@ -99,7 +104,7 @@ int main()
 	IsOnlyInstance();
 	CheckStorage(3e+8);
 	CheckMemory();
-	cout << ReadCPUSpeed()<< "\n";
+	cout << "Your CPU Speed is "<<ReadCPUSpeed()<< "\n";
 	system("pause");
 	return 0;
 }
