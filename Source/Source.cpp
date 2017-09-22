@@ -7,8 +7,8 @@
 
 using namespace std;
 
-bool IsOnlyInstance(LPCTSTR gameTitle) {
-	HANDLE handle = CreateMutex(NULL, TRUE, gameTitle);
+bool IsOnlyInstance() {
+	/*HANDLE handle = CreateMutex(NULL, TRUE, gameTitle);
 	if (GetLastError() != ERROR_SUCCESS) {
 		HWND hWnd = FindWindow(gameTitle, NULL);
 		if (hWnd) {
@@ -20,6 +20,13 @@ bool IsOnlyInstance(LPCTSTR gameTitle) {
 			return false;
 		}
 	}
+	return true;*/
+	CreateMutex(0, FALSE, "COOL GAME");
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		cout << "It has been running" << "\n";
+		return false;
+	}
+	cout << "This is the only one." << "\n";
 	return true;
 }
 
@@ -36,12 +43,14 @@ bool CheckStorage(const DWORDLONG diskSpaceNeeded) {
 		cout << "CheckStorge Failure : Not enough physical storage." << "\n";
 		return false;
 	}
+	cout << "Enough" << "\n";
 	return true;
 }
 
-int main() 
+int main()
 {
-	IsOnlyInstance ? cout << "true" << "\n ": cout << "false" ;
+	IsOnlyInstance();
+	CheckStorage(3e+8);
 	system("pause");
 	return 0;
 }
