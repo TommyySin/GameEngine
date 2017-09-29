@@ -119,6 +119,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Source.cpp" />
+    <ClCompile Include="..\Actors\SpecialAbilityComponent.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Actors\AbilitiesInterface.h" />
+    <ClInclude Include="..\Actors\SpecialAbilityComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
