@@ -3,6 +3,10 @@
 #include <SFML/Graphics.hpp>
 #include "SplashScreen.h"
 #include "GameObject.h"
+#include "SceneGraph.h"
+#include <iostream>
+#include <Windows.h>
+#include <direct.h>
 
 class Lupa
 {

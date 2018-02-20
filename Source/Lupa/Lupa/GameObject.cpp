@@ -8,6 +8,11 @@ GameObject::~GameObject(void)
 	}
 }
 
+void GameObject::AddComponent(BaseComponent* component)
+{
+	m_Components.push_back(component);
+}
+
 void GameObject::AddChild(GameObject* s)
 {
 	children.push_back(s);
@@ -17,7 +22,7 @@ void GameObject::AddChild(GameObject* s)
 void GameObject::Update(float msec)
 {
 	if (parent) { //This node has a parent...
-		worldTransform = parent->worldTransform + transform;
+		worldTransform = parent->worldTransform * transform;
 	}
 	else { //Root node, world transform is local transform!
 		worldTransform = transform;
